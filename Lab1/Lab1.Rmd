@@ -1,0 +1,67 @@
+---
+title: "Lab1"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r Assignment1A}
+
+set.seed(12345)
+w = rnorm(100)
+
+xa = filter(w,filter=c(0,-0.8),method = "recursive")
+
+filter_a = filter(xa, filter = c(1/5,1/5,1/5,1/5,1/5),method = "convolution")
+
+xb = cos(2*pi*(1:100)/5)
+
+filter_b = filter(xb, filter = c(1/5,1/5,1/5,1/5,1/5),method = "convolution")
+
+par(mfcol=c(2,1))
+plot(cbind(xa, filter_a), plot.type="single", lty=1:2)
+plot(cbind(xb, filter_b), plot.type="single", lty=1:2)
+
+```
+
+
+```{r Assignment1B}
+
+set.seed(12345)
+w = rnorm(100)
+
+
+b_series = arima.sim(list(ar = c(4/4,-2/4,0,0,-1/4), ma = c(0,3/4,0,1/4,0,-4/4)),n=1000)
+
+
+```
+
+
+```{r Assignment1C}
+
+set.seed(54321)
+
+c_series = arima.sim(list(ar = c(-3/4), ma = c(-1/9)),n=1000)
+
+simulated_acf = acf(c_series)
+
+theoretical_acf = ARMAacf(ar = c(-3/4), ma = c(-1/9), lag.max = 15)
+
+plot(simulated_acf)
+
+plot(theoretical_acf,type="h")
+
+abline(h=0)
+
+
+
+
+```
